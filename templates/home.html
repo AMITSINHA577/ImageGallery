@@ -1,0 +1,110 @@
+
+
+<!doctype html>
+<html lang="en">
+  <head>
+    {% include 'head.html' %}
+  </head>
+  <body>
+{% block body %}  {% endblock %}
+{%include 'navbar.html' %}
+{%include 'messages.html' %}
+<!--  main code-->
+  <div class="row">
+
+      <div class="col-md-2">
+<!--          categories-->
+
+
+        <div class="list-group mt-4">
+  <a href="/home" class="list-group-item list-group-item-action active">
+    All Images
+  </a>
+  {%for c in cats %}
+
+  <a href="/category/{{c.pk}}" class="list-group-item list-group-item-action">{{c.title}}</a>
+
+
+  {% endfor%}
+</div>
+
+
+      </div>
+
+       <div class="col-md-10">
+<!--          image-->
+
+         <div class="row mt-4">
+
+           <div class="col-md-12">
+
+             <div class="card-columns">
+
+                 {% for i in images %}
+
+                 <div class="card" >
+  <img class="card-img-top" src="/media/{{i.image}}" alt="Card image cap">
+  <div class="card-body">
+     <h5 class="card-title">{{i.title}}</h5>
+     <p class="card-text">{{i.description}}</p>
+     <a href="#" class="btn btn-primary" onclick="showModalwithImage('{{i.image}}')"><i class="fa fa-eye" aria-hidden="true"></i></a>
+      {% if request.session.username %}
+        <a href="#" class="btn btn-primary" style="float:right" onclick="/media/{{i.image}} download"><i class="fa fa-download" aria-hidden="true"></i>
+            <img class="card-img-top" src="/media/{{i.image}}" alt="Card image cap" style="display:none">
+        </a>
+      {% endif %}
+  </div>
+</div>
+                 {% endfor %}
+
+
+             </div>
+           </div>
+         </div>
+       </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal " id="image-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">My Image Gallery</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+            <img src="#!" id="image-show" class="img-fluid" alt="">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+  <script>
+
+      function showModalwithImage(imageUrl)
+      {
+        $('#image-modal').modal('show')
+        $('#image-show').attr('src',`/media/${imageUrl}`)
+
+      }
+  </script>
+    <script>
+          setTimeout(function(){
+            if($("#msg").length>0){
+                $("#msg").remove()
+            }
+          },5000)
+      </script>
+  </body>
+</html>

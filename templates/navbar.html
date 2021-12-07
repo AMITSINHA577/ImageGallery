@@ -1,0 +1,118 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg bg navbar-dark ">
+  <a class="navbar-brand" href="#">
+      <img src="{% static "./img/index1.png" %}" alt="My image">
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+ <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+      </li>
+
+            <li class="nav-item active">
+        <a class="nav-link" href="/about">About <span class="sr-only">(current)</span></a>
+      </li>
+        <li class="nav-item active">
+        <a class="nav-link" href="/contact">Contact <span class="sr-only">(current)</span></a>
+      </li>
+
+
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+
+    </form>
+      <!-- Trigger the modal with a button -->
+     {% if 'username' in request.session %}
+       <form action="/logout/" method="post">
+         {% csrf_token %}
+         <input type="submit" value="Logout" class="btn float-right">
+       </form>
+
+     {% else %}
+         <button type="button" class="btn btn-sn" data-toggle="modal" data-target="#myModal">Login</button>
+     {% endif %}
+ </div>
+</nav>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content" style="padding:20px">
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#login">login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#signup">sign up</a>
+            </li>
+          </ul>
+
+          <!-- Tab panes -->
+          <div class="tab-content">
+              <div id="login" class="container tab-pane active"><br>
+                  <form method="post" action="/login/">
+                      {% csrf_token %}
+                      <div class="input-group form-group">
+                         <div class="input-group-prepend">
+                             <span class="input-group-text"><i class="fas fa-user"></i></span>
+                         </div>
+                         <input type="text" class="form-control" placeholder="username" name="username">
+                      </div>
+                      <div class="input-group form-group">
+                         <div class="input-group-prepend">
+                             <span class="input-group-text"><i class="fas fa-key"></i></span>
+                         </div>
+                         <input type="password" class="form-control" placeholder="password" name="password">
+                      </div>
+                      <div class="form-group">
+                         <input type="submit" value="Login" class="btn float-right login_btn">
+                      </div>
+                 </form>
+              </div>
+              <div id="signup" class="container tab-pane fade"><br>
+                  <form method="post" action="/singup/">
+                     {% csrf_token %}
+                     <div class="input-group form-group">
+                         <div class="input-group-prepend">
+                             <span class="input-group-text"><i class="fas fa-user"></i></span>
+                         </div>
+                         <input type="text" class="form-control" placeholder="name" name="username">
+                     </div>
+                      <div class="input-group form-group">
+                         <div class="input-group-prepend">
+                             <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                         </div>
+                         <input type="text" class="form-control" placeholder="email" name="email">
+                     </div>
+                     <div class="input-group form-group">
+                         <div class="input-group-prepend">
+                             <span class="input-group-text"><i class="fas fa-key"></i></span>
+                         </div>
+                         <input type="password" class="form-control" placeholder="password" name="password">
+                     </div>
+                      <div class="input-group form-group">
+                         <div class="input-group-prepend">
+                             <span class="input-group-text"><i class="fas fa-key"></i></span>
+                         </div>
+                         <input type="password" class="form-control" placeholder="confirm password" name="confirmpassword">
+                     </div>
+                     <div class="form-group">
+                         <input type="submit" value="sign up" class="btn float-right login_btn">
+                     </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
